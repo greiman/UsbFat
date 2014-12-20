@@ -1,0 +1,137 @@
+diff -rb USB_Host_Shield_2.0/Usb.cpp USB_Host_Shield_2.0_org/Usb.cpp
+580c580
+<                         DELAY(102); // delay 102ms, compensate for clock inaccuracy.
+---
+>                         delay(102); // delay 102ms, compensate for clock inaccuracy.
+586c586
+<                 DELAY(100);
+---
+>                 delay(100);
+594c594
+<                 DELAY(100);
+---
+>                 delay(100);
+603c603
+<                         DELAY(102); // delay 102ms, compensate for clock inaccuracy.
+---
+>                         delay(102); // delay 102ms, compensate for clock inaccuracy.
+668c668
+<         //DELAY(2000);
+---
+>         //delay(2000);
+801,802c801,802
+<         //DELAY(2); //per USB 2.0 sect.9.2.6.3
+<         DELAY(300); // Older spec says you should wait at least 200ms
+---
+>         //delay(2); //per USB 2.0 sect.9.2.6.3
+>         delay(300); // Older spec says you should wait at least 200ms
+diff -rb USB_Host_Shield_2.0/Usb.h USB_Host_Shield_2.0_org/Usb.h
+26,27d25
+< 
+< 
+diff -rb USB_Host_Shield_2.0/masstorage.cpp USB_Host_Shield_2.0_org/masstorage.cpp
+172c172
+<                 DELAY(150);
+---
+>                 delay(150);
+207c207
+<                 DELAY(150);
+---
+>                 delay(150);
+339c339
+<         DELAY(2000);
+---
+>         delay(2000);
+401c401
+<         DELAY(1000);
+---
+>         delay(1000);
+410c410
+<         DELAY(1000); // Delay a bit for slow firmware.
+---
+>         delay(1000); // Delay a bit for slow firmware.
+462c462
+<                                 } else DELAY(2 * (tries + 1));
+---
+>                                 } else delay(2 * (tries + 1));
+467c467
+<                                 DELAY(1000);
+---
+>                                 delay(1000);
+631c631
+<         DELAY(20);
+---
+>         delay(20);
+791,793d790
+< #if SKIP_WRITE_PROTECT
+<         return 0;
+< #else  // SKIP_WRITE_PROTECT
+805d801
+< #endif  // SKIP_WRITE_PROTECT
+848c844
+<                 DELAY(6);
+---
+>                 delay(6);
+866c862
+<         while(pUsb->ctrlReq(bAddress, 0, bmREQ_MASSOUT, MASS_REQ_BOMSR, 0, 0, bIface, 0, 0, NULL, NULL) == 0x01) DELAY(6);
+---
+>         while(pUsb->ctrlReq(bAddress, 0, bmREQ_MASSOUT, MASS_REQ_BOMSR, 0, 0, bIface, 0, 0, NULL, NULL) == 0x01) delay(6);
+878c874
+<         DELAY(6);
+---
+>         delay(6);
+880c876
+<         DELAY(6);
+---
+>         delay(6);
+882c878
+<         DELAY(6);
+---
+>         delay(6);
+884c880
+<         DELAY(6);
+---
+>         delay(6);
+1025c1021
+<         DELAY(1000);
+---
+>         delay(1000);
+1038c1034
+<         while((usberr = pUsb->outTransfer(bAddress, epInfo[epDataOutIndex].epAddr, sizeof (CommandBlockWrapper), (uint8_t*)pcbw)) == hrBUSY) DELAY(1);
+---
+>         while((usberr = pUsb->outTransfer(bAddress, epInfo[epDataOutIndex].epAddr, sizeof (CommandBlockWrapper), (uint8_t*)pcbw)) == hrBUSY) delay(1);
+1050c1046
+<                                         while((usberr = pUsb->inTransfer(bAddress, epInfo[epDataInIndex].epAddr, &bytes, rbuf)) == hrBUSY) DELAY(1);
+---
+>                                         while((usberr = pUsb->inTransfer(bAddress, epInfo[epDataInIndex].epAddr, &bytes, rbuf)) == hrBUSY) delay(1);
+1054c1050
+<                                         while((usberr = pUsb->inTransfer(bAddress, epInfo[epDataInIndex].epAddr, &bytes, (uint8_t*)buf)) == hrBUSY) DELAY(1);
+---
+>                                         while((usberr = pUsb->inTransfer(bAddress, epInfo[epDataInIndex].epAddr, &bytes, (uint8_t*)buf)) == hrBUSY) delay(1);
+1061c1057
+<                                 while((usberr = pUsb->outTransfer(bAddress, epInfo[epDataOutIndex].epAddr, bytes, (uint8_t*)buf)) == hrBUSY) DELAY(1);
+---
+>                                 while((usberr = pUsb->outTransfer(bAddress, epInfo[epDataOutIndex].epAddr, bytes, (uint8_t*)buf)) == hrBUSY) delay(1);
+1074c1070
+<                         while((usberr = pUsb->inTransfer(bAddress, epInfo[epDataInIndex].epAddr, &bytes, (uint8_t*) & csw)) == hrBUSY) DELAY(1);
+---
+>                         while((usberr = pUsb->inTransfer(bAddress, epInfo[epDataInIndex].epAddr, &bytes, (uint8_t*) & csw)) == hrBUSY) delay(1);
+diff -rb USB_Host_Shield_2.0/settings.h USB_Host_Shield_2.0_org/settings.h
+21,31c21
+< ////////////////////////////////////////////////////////////////////////////////
+< /* Added by Bill Greiman to speed up mass storage initialization with USB
+<  * flash drives and simple USB hard drives.
+<  * Disable this by defining DELAY(x) to be delay(x).
+<  */
+< #define DELAY(x) if((x) < 200)delay(x)
+< /* Almost all USB flash drives and simple USB hard drives fail the write
+<  * protect test and add 20 - 30 seconds to USB init.  Set SKIP_WRITE_PROTECT
+<  * to nonzero to skip the test and assume the drive is writable.
+<  */
+< #define SKIP_WRITE_PROTECT 1
+---
+> 
+74c64
+< #define MASS_MAX_SUPPORTED_LUN  1 ///// 8  WHG
+---
+> #define MASS_MAX_SUPPORTED_LUN 8
